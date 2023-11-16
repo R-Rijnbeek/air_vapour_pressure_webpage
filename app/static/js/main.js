@@ -22,3 +22,28 @@ window.addEventListener('load', function() {
     }
     
 })
+
+function ajaxWithRefresh(){
+    let temp = $('#temperature').val()
+    let hr = $('#relative_humidity').val();
+    $.ajax(
+        {
+        url:"/test_post",
+        type:"POST",
+        data: {
+            "temp": temp,
+            "hr": hr
+        },
+        success: function(response){
+            console.log("user succesfull stored in database: " + JSON.stringify(response))
+            //$('#name').val('')
+            //$('#email').val('')
+            //location.reload()
+        },
+        error: function(error){
+            alert("Error storing information in database: error code: " + error.status)
+            //$('#name').val('')
+            //$('#email').val('')
+        },
+    });
+}

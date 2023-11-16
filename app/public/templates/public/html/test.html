@@ -3,30 +3,20 @@
 {% block title %}Test{% endblock %}
 
 {% block content %}
-    <p>{{entalpie_m3_air}}</p>
 
     <div class="slidecontainer">
-        <p class="slider_title">Temperature:</p>
+        <p class="slider_title">
+            Temperature: 
+            <span id="temperature_value"></span>
+        </p>
         <input type="range" min="-10" max="100" value="20" class="slider" id="temperature">
-        <p>Value: <span id="temperature_value"></span></p>
-        <p class="slider_title">Relative Humidity:</p>
+        <p class="slider_title">
+            Relative Humidity:
+            <span id="relative_humidity_value"></span>
+        </p>
         <input type="range" min="0" max="100" value="65" class="slider" id="relative_humidity">
-        <p>Value: <span id="relative_humidity_value"></span></p>
     </div>
 
-    <script>
-        //var temperature_slider = document.getElementById("temperature");
-//var relative_humidity_slider = document.getElementById("relative_humidity");
-
-//var temperature_value = document.getElementById("temperature_value");
-//var relative_humidity_value = document.getElementById("relative_humidity_value");
-
-//temperature_value.innerHTML = temperature_slider.value;
-//relative_humidity_value.innerHTML = relative_humidity_slider.value;
-
-//temperature_slider.oninput = function() {
-    //temperature_value.innerHTML = this.value;
-//}
-        </script>
+    <button onclick="ajaxWithRefresh();">add user refrehing page</button>
 
 {% endblock %}
