@@ -34,3 +34,8 @@ body {
     font-size: 20px;
     text-align: center;
 }
+
+.tableDiv {
+    width: 500px;
+    margin: 0 auto;
+}
