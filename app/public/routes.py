@@ -9,7 +9,7 @@ from . import test
 def get_userlist():
     LOG.info("HolAHOLA")
     MuSuperMethod()
-    return render_template("public/html/test.html"), 200			
+    return render_template("public/html/test.html"), 200
 
 # =============== EXECUTE TEST CODE ===============
 
