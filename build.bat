@@ -28,5 +28,10 @@ echo        ]
 echo    }
 ) > .\.vscode\launch.json
 
+( 
+    echo {
+    echo    "css.validate": false
+    echo }
+) > .\.vscode\settings.json
 
 conda env create -f environment.yml --prefix env

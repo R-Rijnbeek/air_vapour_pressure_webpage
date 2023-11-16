@@ -10,7 +10,8 @@ def create_app():
     
     LOG.init_app(app)
 
-    from .public import test
+    from .public import test, api
     app.register_blueprint(test)
+    app.register_blueprint(api)
 
     return app
