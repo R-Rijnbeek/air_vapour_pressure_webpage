@@ -9,8 +9,8 @@ __maintainer__      = "Robert Rijnbeek"
 __email__           = "robert270384@gmail.com"
 __status__          = "Development"
 
-__creation_date__   = '17/02/2021'
-__last_update__     = '14/03/2021'
+__creation_date__   = '12/11/2023'
+__last_update__     = '16/11/2023'
 
 # =============== IMPORTS ==============
 
