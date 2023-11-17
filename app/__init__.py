@@ -1,17 +1,43 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+__init__.py: This module define the webservice function build with Flask
+"""
+# =============== IMPORTS ==============
+
 from flask import Flask
 
 from app.shared import LOG
 
+# =============== PROCESS ===============
 
 def create_app():
-    app = Flask(__name__)
+    """
+    INFORMATION: Fuction that activate the webservice with the selected configuration values of url, Port and debug mode defined in "dev_config.cfg"
 
-    app.config.from_pyfile("dev_config.cfg")
+    INPUT: None
+
+    OUTPUT:BOOLEAN
+    """
+    try:
+        APP = Flask(__name__)
+
+        APP.config.from_pyfile("dev_config.cfg")
+        
+        LOG.init_app(APP)
+
+        LOG.info("Register Blueprints")
+        from .public import test, api
+        APP.register_blueprint(test)
+        APP.register_blueprint(api)
+
+        LOG.info("Run the WebService")
+        return APP
     
-    LOG.init_app(app)
-
-    from .public import test, api
-    app.register_blueprint(test)
-    app.register_blueprint(api)
-
-    return app
+    except Exception as exc:
+        message = f"unexpected error activting the webservice process: {exc}"
+        if (LOG.isLoggerActive()):
+            LOG.critical(message)
+        else:
+            print(f"CRITICAL: {message}")
+        return False
