@@ -38,8 +38,8 @@ def get_userlist():
 def process():
     try:
         form = request.form
-        temp = int(form.get("temp",type=int))
-        hr = int(form.get("hr", type=int))
+        temp = float(form.get("temp",type=float))
+        hr = float(form.get("hr", type=float))
         results = {
             'processed':{
                 "vapourpressure": roundWithDecimals(vapourpressure(temp)),
