@@ -15,7 +15,7 @@ from air_vapour_pressure_dynamics import (  vapourpressure,
 
 from basic_decorators import argument_check
 
-from app.utils import roundWithDecimals
+from app.utils import MakeUpValueWithUnits
 
 from app.shared import LOG
 
@@ -40,17 +40,18 @@ def process():
         form = request.form
         temp = float(form.get("temp",type=float))
         hr = float(form.get("hr", type=float))
+
         results = {
             'processed':{
-                "vapourpressure": roundWithDecimals(vapourpressure(temp)),
-                "density_air": roundWithDecimals(density_air(temp,hr)),
-                "absolutehumidity_kg_air": roundWithDecimals(absolutehumidity_kg_air(temp,hr)),
-                "absolutehumidity_m3_air": roundWithDecimals(absolutehumidity_m3_air(temp,hr)),
-                "entalpie_kg_air": roundWithDecimals(entalpie_kg_air(temp,hr)),
-                "entalpie_m3_air": roundWithDecimals(entalpie_m3_air(temp,hr)),
-                "moisuredeficit_kg_air": roundWithDecimals(moisuredeficit_kg_air(temp,hr)),
-                "moisuredeficit_m3_air": roundWithDecimals(moisuredeficit_m3_air(temp,hr)),
-                "dew_point_temperature": roundWithDecimals(dew_point_temperature(temp,hr))
+                "vapourpressure": MakeUpValueWithUnits(vapourpressure(temp)),
+                "density_air": MakeUpValueWithUnits(density_air(temp,hr)),
+                "absolutehumidity_kg_air": MakeUpValueWithUnits(absolutehumidity_kg_air(temp,hr)),
+                "absolutehumidity_m3_air": MakeUpValueWithUnits(absolutehumidity_m3_air(temp,hr)),
+                "entalpie_kg_air": MakeUpValueWithUnits(entalpie_kg_air(temp,hr)),
+                "entalpie_m3_air": MakeUpValueWithUnits(entalpie_m3_air(temp,hr)),
+                "moisuredeficit_kg_air": MakeUpValueWithUnits(moisuredeficit_kg_air(temp,hr)),
+                "moisuredeficit_m3_air": MakeUpValueWithUnits(moisuredeficit_m3_air(temp,hr)),
+                "dew_point_temperature": MakeUpValueWithUnits(dew_point_temperature(temp,hr))
             }
         }
         return jsonify(results), 200
