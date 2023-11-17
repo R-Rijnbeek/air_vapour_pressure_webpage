@@ -1,0 +1,23 @@
+{% extends "base_template.html" %}
+
+{% block title %}Air Properties{% endblock %}
+
+{% block content %}
+    <div class="maincontent">
+        <div class="slidecontainer">
+            <p class="slider_title">
+                Temperature: 
+                <span id="temperature_value"></span>
+            </p>
+            <input type="range" min="-10" max="100" value="20" class="slider" id="temperature" onchange="AirPropertiesCalculation();">
+            <p class="slider_title">
+                Relative Humidity:
+                <span id="relative_humidity_value"></span>
+            </p>
+            <input type="range" min="0" max="100" value="65" class="slider" id="relative_humidity" onchange="AirPropertiesCalculation();">
+        </div>
+
+        <div id="tableDiv" class="tableDiv"></div>
+    </div>
+
+{% endblock %}

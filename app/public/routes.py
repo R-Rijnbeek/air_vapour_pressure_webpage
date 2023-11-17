@@ -18,11 +18,11 @@ from app.shared import LOG
 from . import test, api
 
 
-@test.route("/test", methods=["GET"])
+@test.route("/", methods=["GET"])
 def get_userlist():
-    return render_template("public/html/test.html"), 200
+    return render_template("public/html/main.html"), 200
 
-@api.route("/test_post", methods=["POST"])
+@api.route("/post_request", methods=["POST"])
 def process():
     try:
         form = request.form

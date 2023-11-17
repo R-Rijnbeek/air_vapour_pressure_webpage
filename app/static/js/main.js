@@ -31,7 +31,7 @@ function AirPropertiesCalculation(){
     let hr = $('#relative_humidity').val();
     $.ajax(
         {
-        url:"/test_post",
+        url:"/post_request",
         type:"POST",
         data: {
             "temp": temp,

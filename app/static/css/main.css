@@ -2,9 +2,15 @@ body {
     background: rgb(236, 230, 230);
 }
 
-.slidecontainer {
+.maincontent {
     width: 100%;
-  }
+    margin: 0 auto;
+    text-align: -webkit-center;
+}
+
+.slidecontainer {
+    width: 500px;
+}
 
 .slider {
     -webkit-appearance: none;
@@ -38,4 +44,16 @@ body {
 .tableDiv {
     width: 500px;
     margin: 0 auto;
+    font-size: 20px;
+}
+
+@media (max-width: 500px) {
+    .tableDiv {
+        width: 95%;
+        font-size: 15px;
+    }
+
+    .slidecontainer {
+        width: 95%;
+    }
 }
