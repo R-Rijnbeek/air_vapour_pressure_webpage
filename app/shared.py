@@ -1,3 +1,7 @@
-from app.logger import ApplicationLogger
+# =============== IMPORTS ==============
 
-LOG = ApplicationLogger("Hello")
+from app.utils.logger import ApplicationLogger
+
+# =============== DEFINE SHARED OBJECTS ==============
+
+LOG = ApplicationLogger("LOGGER")
