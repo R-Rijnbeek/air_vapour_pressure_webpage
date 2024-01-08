@@ -10,27 +10,12 @@ window.addEventListener('load', function() {
     sliderChanger(temperature_slider,temperature_value)
     sliderChanger(relative_humidity_slider,relative_humidity_value)
     
-    AddEventListenerOnSlider(temperature_slider)
-    AddEventListenerOnSlider(relative_humidity_slider)
+    AddEventListenerOnSlider(temperature_slider, AirPropertiesCalculation)
+    AddEventListenerOnSlider(relative_humidity_slider, AirPropertiesCalculation)
 
     AirPropertiesCalculation()
 
 })
-
-function AddEventListenerOnSlider(sliderDOM) {
-    sliderDOM.addEventListener("change",() => {
-        AirPropertiesCalculation();
-    })
-}
-
-function sliderChanger(slider,value) {
-
-    value.innerHTML = slider.value;
-
-    slider.oninput = function() {
-        value.innerHTML = this.value;
-    }
-}
 
 function AirPropertiesCalculation(){
     let temp = $('#temperature').val()
