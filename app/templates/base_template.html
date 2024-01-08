@@ -11,11 +11,40 @@
         <!-- Public JS AND CSS libraries -->
         <link href="/static/css/main.css" rel="stylesheet" type= "text/css">
         <script src="/static/js/main.js" ></script>
+
+        
+
+
     </head>
 
     <body>
+        <div class="w3-bar" style="background-color: rgb(208, 226, 206);">
+            <a href="{{ url_for('test.get_userlist') }}" style="width:50%" class="w3-bar-item w3-button w3-mobile tablink w3-green" onclick="openCity(event,'Basic Calculations')">
+                Basic Calculations
+            </a>
+            <a href="{{ url_for('test.variacional_calculus') }}" style="width:50%" class="w3-bar-item w3-button w3-mobile tablink" onclick="openCity(event,'variational Calculations')">
+                variational Calculations
+            </a>
+        </div>
+
         {% block content %}
         {% endblock %}   
+
+        <script>
+            function openCity(evt, cityName) {
+              var i, x, tablinks;
+              x = document.getElementsByClassName("city");
+              for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+              }
+              tablinks = document.getElementsByClassName("tablink");
+              for (i = 0; i < x.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" w3-red", "");
+              }
+              document.getElementById(cityName).style.display = "block";
+              evt.currentTarget.className += " w3-red";
+            }
+        </script>
     </body>
 
 </html>

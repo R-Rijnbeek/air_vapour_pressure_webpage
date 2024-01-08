@@ -31,6 +31,15 @@ def get_userlist():
     except Exception as exc:
         LOG.error(f"ERROR: {exc}")
         abort(500)
+
+@test.route("/variacional", methods=["GET"])
+@argument_check()
+def variacional_calculus():
+    try:
+        return render_template("public/html/variacional.html"), 200
+    except Exception as exc:
+        LOG.error(f"ERROR: {exc}")
+        abort(500)
     
 
 @api.route("/post_request", methods=["POST"])
