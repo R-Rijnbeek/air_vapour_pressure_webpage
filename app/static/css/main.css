@@ -10,6 +10,12 @@ body {
 
 .slidecontainer {
     width: 500px;
+    text-align: center
+}
+
+.slider_sub_container {
+    display: inline-block;
+    width:49%
 }
 
 .slider {
@@ -38,6 +44,11 @@ body {
 
 .slider_title {
     font-size: 20px;
+    text-align: center;
+}
+
+.slider_title_2 {
+    font-size: 11px;
     text-align: center;
 }
 

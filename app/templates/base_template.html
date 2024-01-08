@@ -11,11 +11,25 @@
         <!-- Public JS AND CSS libraries -->
         <link href="/static/css/main.css" rel="stylesheet" type= "text/css">
         <script src="/static/js/main.js" ></script>
+        {% block libraries %}{% endblock %}
     </head>
 
     <body>
+        <div class="w3-bar" style="background-color: rgb(208, 226, 206);">
+            <a id="menu_1" href="{{ url_for('test.get_userlist') }}" style="width:50%" class="w3-bar-item w3-button w3-mobile tablink {{active_menu_1}}" onclick="openCity(event,'Basic Calculations')">
+                Basic Calculations
+            </a>
+            <a id="menu_2" href="{{ url_for('test.variacional_calculus') }}" style="width:50%" class="w3-bar-item w3-button w3-mobile tablink {{active_menu_2}}" onclick="openCity(event,'variational Calculations')">
+                variational Calculations
+            </a>
+        </div>
+
         {% block content %}
         {% endblock %}   
+
+        <script>
+            
+        </script>
     </body>
 
 </html>

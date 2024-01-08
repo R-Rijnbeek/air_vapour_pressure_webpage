@@ -1,0 +1,39 @@
+{% extends "base_template.html" %}
+
+{% block title %}Air Properties{% endblock %}
+
+{% block libraries %}
+    <!-- Specific library for this module -->
+    <script src="/static/js/variacional_calculations.js" ></script>
+{% endblock %}
+
+{% block content %}
+    <div class="maincontent">
+        <div class="slidecontainer">
+            <div class="slider_sub_container">
+                <p class="slider_title_2">
+                    Temperature: 
+                    <span id="temperature_value"></span>
+                </p>
+                <input type="range" min="-10" max="100" value="20" step="0.1" class="slider" id="temperature">
+                <p class="slider_title_2">
+                    Temperature change:
+                    <span id="temperature_change_value"></span>
+                </p>
+                <input type="range" min="-5" max="5" value="0" step="0.01" class="slider" id="temperature_change">
+            </div>
+            <div class="slider_sub_container">
+                <p class="slider_title_2">
+                    Relative Humidity: 
+                    <span id="relative_humidity_value"></span>
+                </p>
+                <input type="range" min="0.1" max="100" value="50" step="0.1" class="slider" id="relative_humidity">
+                <p class="slider_title_2">
+                    Relative Humidity change:
+                    <span id="relative_humidity_change_value"></span>
+                </p>
+                <input type="range" min="-10" max="10" value="0" step="0.01" class="slider" id="relative_humidity_change">
+            </div>
+        </div>
+    </div>
+{% endblock %}

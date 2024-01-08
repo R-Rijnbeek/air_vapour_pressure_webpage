@@ -27,7 +27,16 @@ from . import test, api
 @argument_check()
 def get_userlist():
     try:
-        return render_template("public/html/main.html"), 200
+        return render_template("public/html/basic_calculations.html", active_menu_1="w3-green"), 200
+    except Exception as exc:
+        LOG.error(f"ERROR: {exc}")
+        abort(500)
+
+@test.route("/variacional", methods=["GET"])
+@argument_check()
+def variacional_calculus():
+    try:
+        return render_template("public/html/variacional_calculations.html", active_menu_2="w3-green"), 200
     except Exception as exc:
         LOG.error(f"ERROR: {exc}")
         abort(500)
@@ -52,6 +61,29 @@ def process():
                 "moisuredeficit_kg_air": MakeUpValueWithUnits(moisuredeficit_kg_air(temp,hr)),
                 "moisuredeficit_m3_air": MakeUpValueWithUnits(moisuredeficit_m3_air(temp,hr)),
                 "dew_point_temperature": MakeUpValueWithUnits(dew_point_temperature(temp,hr))
+            }
+        }
+        return jsonify(results), 200
+    except Exception as exc:
+        LOG.error(f"ERROR: {exc}")
+        abort(400)
+
+@api.route("/post_variacional_request", methods=["POST"])
+@argument_check()
+def variacional_process():
+    try:
+        form = request.form
+        temp = float(form.get("temp",type=float))
+        delta_temp = float(form.get("delta_temp",type=float))
+        hr = float(form.get("hr", type=float))
+        delta_hr = float(form.get("delta_hr", type=float))
+
+        results = {
+            'processed':{
+                "temp": temp,
+                "delta_temp": delta_temp,
+                "hr": hr,
+                "delta_hr": delta_hr 
             }
         }
         return jsonify(results), 200
