@@ -27,7 +27,7 @@ from . import test, api
 @argument_check()
 def get_userlist():
     try:
-        return render_template("public/html/main.html", active_menu_1="w3-green"), 200
+        return render_template("public/html/basic_calculations.html", active_menu_1="w3-green"), 200
     except Exception as exc:
         LOG.error(f"ERROR: {exc}")
         abort(500)
@@ -36,7 +36,7 @@ def get_userlist():
 @argument_check()
 def variacional_calculus():
     try:
-        return render_template("public/html/variacional.html", active_menu_2="w3-green"), 200
+        return render_template("public/html/variacional_calculations.html", active_menu_2="w3-green"), 200
     except Exception as exc:
         LOG.error(f"ERROR: {exc}")
         abort(500)
