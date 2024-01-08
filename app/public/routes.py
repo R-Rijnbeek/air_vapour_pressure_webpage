@@ -68,6 +68,29 @@ def process():
         LOG.error(f"ERROR: {exc}")
         abort(400)
 
+@api.route("/post_variacional_request", methods=["POST"])
+@argument_check()
+def variacional_process():
+    try:
+        form = request.form
+        temp = float(form.get("temp",type=float))
+        delta_temp = float(form.get("delta_temp",type=float))
+        hr = float(form.get("hr", type=float))
+        delta_hr = float(form.get("delta_hr", type=float))
+
+        results = {
+            'processed':{
+                "temp": temp,
+                "delta_temp": delta_temp,
+                "hr": hr,
+                "delta_hr": delta_hr 
+            }
+        }
+        return jsonify(results), 200
+    except Exception as exc:
+        LOG.error(f"ERROR: {exc}")
+        abort(400)
+
 # =============== EXECUTE TEST CODE ===============
 
 if __name__ == "__main__":

@@ -27,7 +27,6 @@ window.addEventListener('load', function() {
 })
 
 function AirPropertiesChangeCalculation(){
-    alert("hola")
     let temp = $('#temperature').val()
     let delta_temp = $('#temperature_change').val() 
     let hr = $('#relative_humidity').val();
@@ -45,7 +44,6 @@ function AirPropertiesChangeCalculation(){
         success: function(response){
             console.log("INFO: Succesfull calculation" + JSON.stringify(response))
             //refrehTable(response)
-            alert("buenas")
         },
         error: function(error){
             console.log("ERROR: Unespected error => " + error.status)
