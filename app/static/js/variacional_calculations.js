@@ -29,8 +29,8 @@ window.addEventListener('load', function() {
 function AirPropertiesChangeCalculation(){
     let temp = $('#temperature').val()
     let delta_temp = $('#temperature_change').val() 
-    let hr = $('#relative_humidity').val();
-    let delta_hr = $('#relative_humidity_change').val()
+    let rh = $('#relative_humidity').val();
+    let delta_rh = $('#relative_humidity_change').val()
     $.ajax(
         {
         url:"/post_variacional_request",
@@ -38,8 +38,8 @@ function AirPropertiesChangeCalculation(){
         data: {
             "temp": temp,
             "delta_temp": delta_temp,
-            "hr": hr,
-            "delta_hr": delta_hr
+            "rh": rh,
+            "delta_rh": delta_rh
         },
         success: function(response){
             console.log("INFO: Succesfull calculation" + JSON.stringify(response))
