@@ -72,6 +72,25 @@ def process():
         LOG.error(f"ERROR: {exc}")
         abort(400)
 
+def delta_Method_change(temp, delta_temp, rh, delta_rh, METHOD=None):
+    
+    TEMP = sp.Symbol("temp")
+    RH = sp.Symbol("hr")
+
+    diff_method_by_Temp = sp.diff(METHOD(TEMP,RH),TEMP)
+    diff_method_by_RH = sp.diff(METHOD(TEMP,RH),RH)
+
+    delta_Temp_contribution = sp.N(diff_method_by_Temp.subs([(TEMP, temp), (RH, rh)]))
+    delta_RH_contribution = sp.N(diff_method_by_RH.subs([(TEMP, temp), (RH, rh)]))
+
+    result = delta_Temp_contribution * delta_temp + delta_RH_contribution * delta_rh
+
+    return result
+
+def delta_AbsoluteHumidity(temp, delta_temp, rh, delta_rh):
+    return delta_Method_change(temp, delta_temp, rh, delta_rh, METHOD=absolutehumidity_kg_air)
+
+
 @api.route("/post_variacional_request", methods=["POST"])
 @argument_check()
 def variacional_process():
@@ -80,24 +99,27 @@ def variacional_process():
 
         temp = float(form.get("temp",type=float))
         delta_temp = float(form.get("delta_temp",type=float))
-        hr = float(form.get("hr", type=float))
-        delta_hr = float(form.get("delta_hr", type=float))
+        rh = float(form.get("hr", type=float))
+        delta_rh = float(form.get("delta_hr", type=float))
 
         setArgumentCheck(False)
         setApplyUnits(False)
 
         TEMP = sp.Symbol("temp")
-        HR = sp.Symbol("hr")
+        RH = sp.Symbol("rh")
 
 
-        diff_ab_hu_by_Temp = sp.diff(absolutehumidity_kg_air(TEMP,HR),TEMP)
-        diff_ab_hu_by_HR = sp.diff(absolutehumidity_kg_air(TEMP,HR),HR)
+        diff_ab_hu_by_Temp = sp.diff(absolutehumidity_kg_air(TEMP,RH),TEMP)
+        diff_ab_hu_by_RH = sp.diff(absolutehumidity_kg_air(TEMP,RH),RH)
 
-        a = sp.N(diff_ab_hu_by_Temp.subs([(TEMP, temp), (HR, hr)]))
+        delta_Temp_contribution = sp.N(diff_ab_hu_by_Temp.subs([(TEMP, temp), (RH, rh)]))
+        delta_RH_contribution = sp.N(diff_ab_hu_by_RH.subs([(TEMP, temp), (RH, rh)]))
 
+        result = delta_Temp_contribution * delta_temp + delta_RH_contribution * delta_rh
 
-
-        print(a)
+        print(delta_Temp_contribution)
+        print(delta_RH_contribution)
+        print (result)
 
 
 
@@ -106,8 +128,8 @@ def variacional_process():
             'processed':{
                 "temp": temp,
                 "delta_temp": delta_temp,
-                "hr": hr,
-                "delta_hr": delta_hr 
+                "hr": rh,
+                "delta_hr": delta_rh 
             }
         }
         return jsonify(results), 200
