@@ -23,6 +23,8 @@ def create_app():
         APP = Flask(__name__)
 
         APP.config.from_pyfile("dev_config.cfg")
+
+        APP.json.sort_keys = False # Preserve the order of the JSON dict, cnt put it on the dev_config.cfg because sinse Flask version  2.3.x changes remove it as standard configutaion
         
         LOG.init_app(APP)
 
