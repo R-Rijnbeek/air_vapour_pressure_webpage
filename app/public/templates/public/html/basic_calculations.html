@@ -8,18 +8,25 @@
 {% endblock %}
 
 {% block content %}
+
     <div class="maincontent">
         <div class="slidecontainer">
             <p class="slider_title">
                 Temperature: 
                 <span id="temperature_value"></span>
             </p>
-            <input type="range" min="-10" max="100" value="20" step="0.1" class="slider" id="temperature">
+            <form>
+                <input name="foo" type="range" min="-10" max="100" value="20" step="0.1" class="slider" id="temperature">
+                <output for="foo" onforminput="value = foo.valueAsNumber;"></output>
+            </form>
             <p class="slider_title">
                 Relative Humidity:
                 <span id="relative_humidity_value"></span>
             </p>
-            <input type="range" min="0.1" max="100" value="65" step="0.1" class="slider" id="relative_humidity">
+            <form>
+                <input type="range" min="0.1" max="100" value="65" step="0.1" class="slider" id="relative_humidity">
+                <output for="foo" onforminput="value = foo.valueAsNumber;"></output>
+            </form>
         </div>
 
         <div id="tableDiv" class="tableDiv"></div>
