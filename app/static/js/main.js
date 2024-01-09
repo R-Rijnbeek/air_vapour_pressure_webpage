@@ -13,6 +13,12 @@ function AddEventListenerOnSlider(sliderDOM, method) {
     })
 }
 
+function MakeUpKeys(key) {
+    key = key.charAt(0).toUpperCase() + key.slice(1);
+    return key.replaceAll("_", " ")
+}
+
+
 function refrehTable(response) {
     
     var table = document.createElement('TABLE');
@@ -44,7 +50,7 @@ function refrehTable(response) {
         tableBody.appendChild(tr);
 
         var td = document.createElement('TD');
-        td.appendChild(document.createTextNode(key));
+        td.appendChild(document.createTextNode(MakeUpKeys(key)));
         tr.appendChild(td);
 
         var td = document.createElement('TD');
