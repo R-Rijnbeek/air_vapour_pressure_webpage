@@ -89,8 +89,8 @@ def process_variacional_PostRequest(temp, delta_temp, rh,delta_rh):
     results = {
         'processed':{
             "absolutehumidity_kg_air": roundWithDecimals(ab_hu_kg),
-            "delta_absolutehumidity_kg_air": roundWithDecimals(entalpie_kg, decimals=4),
-            "entalpie_kg_air": roundWithDecimals(delta_ab_hu_kg),
+            "delta_absolutehumidity_kg_air": roundWithDecimals(delta_ab_hu_kg, decimals=4),
+            "entalpie_kg_air": roundWithDecimals(entalpie_kg),
             "delta_entalpie_kg_air": roundWithDecimals(delta_entalpie_kg, decimals=4)
         }
     }

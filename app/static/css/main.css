@@ -58,6 +58,24 @@ body {
     font-size: 20px;
 }
 
+output { 
+    pointer-events: none;
+    position: absolute;
+    width: 35px; 
+    height: 21px; 
+    text-align: center; 
+    color:black;  
+    display: inline-block; 
+    bottom: 28%;
+    left: 0;
+    margin-left: -1%;
+}
+
+form { 
+    position: relative; 
+    margin: 0%;
+}
+
 @media (max-width: 500px) {
     .tableDiv {
         width: 95%;
