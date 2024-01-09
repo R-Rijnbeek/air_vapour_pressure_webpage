@@ -1,11 +1,4 @@
-
-window.addEventListener('load', function() {
-    sliderChanger()
-})
-
-
-
-function sliderChanger() {
+function sliderChanger(correction) {
 
     var el, newPoint, newPlace, offset;
  
@@ -35,8 +28,8 @@ function sliderChanger() {
          el
            .next("output")
            .css({
-             left: newPlace*0.96, //custom added problems with buildin margins
-             marginLeft: offset*0.96 + "%" //custom added problems with buildin margins
+             left: newPlace*correction, //custom added problems with buildin margins
+             marginLeft: offset*correction + "%" //custom added problems with buildin margins
            })
              .text(el.val());
          })

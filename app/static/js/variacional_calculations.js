@@ -5,6 +5,8 @@ window.addEventListener('load', function() {
     var relative_humidity_slider = document.getElementById("relative_humidity");
     var relative_humidity_change_slider = document.getElementById("relative_humidity_change");
 
+    sliderChanger(0.88)
+
     AddEventListenerOnSlider(temperature_slider, AirPropertiesChangeCalculation)
     AddEventListenerOnSlider(temperature_change_slider, AirPropertiesChangeCalculation)
     AddEventListenerOnSlider(relative_humidity_slider, AirPropertiesChangeCalculation)
