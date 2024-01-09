@@ -43,12 +43,10 @@ function AirPropertiesChangeCalculation(){
         },
         success: function(response){
             console.log("INFO: Succesfull calculation" + JSON.stringify(response))
-            //refrehTable(response)
+            refrehTable(response)
         },
         error: function(error){
             console.log("ERROR: Unespected error => " + error.status)
         },
     });
 }
-
-
