@@ -12,7 +12,9 @@ from air_vapour_pressure_dynamics import (  vapourpressure,
                                             entalpie_m3_air, 
                                             moisuredeficit_kg_air,
                                             moisuredeficit_m3_air,
-                                            dew_point_temperature
+                                            dew_point_temperature,
+                                            setArgumentCheck,
+                                            setApplyUnits
                                         )
 
 from basic_decorators import argument_check
@@ -75,13 +77,30 @@ def process():
 def variacional_process():
     try:
         form = request.form
+
         temp = float(form.get("temp",type=float))
         delta_temp = float(form.get("delta_temp",type=float))
         hr = float(form.get("hr", type=float))
         delta_hr = float(form.get("delta_hr", type=float))
 
+        setArgumentCheck(False)
+        setApplyUnits(False)
 
         TEMP = sp.Symbol("temp")
+        HR = sp.Symbol("hr")
+
+
+        diff_ab_hu_by_Temp = sp.diff(absolutehumidity_kg_air(TEMP,HR),TEMP)
+        diff_ab_hu_by_HR = sp.diff(absolutehumidity_kg_air(TEMP,HR),HR)
+
+        a = sp.N(diff_ab_hu_by_Temp.subs([(TEMP, temp), (HR, hr)]))
+
+
+
+        print(a)
+
+
+
 
         results = {
             'processed':{
