@@ -2,6 +2,8 @@
 
 from flask import render_template, request, jsonify, abort
 
+import sympy as sp
+
 from air_vapour_pressure_dynamics import (  vapourpressure, 
                                             density_air ,
                                             absolutehumidity_kg_air, 
@@ -77,6 +79,9 @@ def variacional_process():
         delta_temp = float(form.get("delta_temp",type=float))
         hr = float(form.get("hr", type=float))
         delta_hr = float(form.get("delta_hr", type=float))
+
+
+        TEMP = sp.Symbol("temp")
 
         results = {
             'processed':{
