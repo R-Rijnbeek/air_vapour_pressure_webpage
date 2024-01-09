@@ -19,14 +19,14 @@ window.addEventListener('load', function() {
 
 function AirPropertiesCalculation(){
     let temp = $('#temperature').val()
-    let hr = $('#relative_humidity').val();
+    let rh = $('#relative_humidity').val();
     $.ajax(
         {
         url:"/post_request",
         type:"POST",
         data: {
             "temp": temp,
-            "hr": hr
+            "rh": rh
         },
         success: function(response){
             console.log("INFO: Succesfull calculation" + JSON.stringify(response))

@@ -51,19 +51,21 @@ def process():
     try:
         form = request.form
         temp = float(form.get("temp",type=float))
-        hr = float(form.get("hr", type=float))
+        rh = float(form.get("rh", type=float))
+
+        setApplyUnits(True)
 
         results = {
             'processed':{
                 "vapourpressure": MakeUpValueWithUnits(vapourpressure(temp)),
-                "density_air": MakeUpValueWithUnits(density_air(temp,hr)),
-                "absolutehumidity_kg_air": MakeUpValueWithUnits(absolutehumidity_kg_air(temp,hr)),
-                "absolutehumidity_m3_air": MakeUpValueWithUnits(absolutehumidity_m3_air(temp,hr)),
-                "entalpie_kg_air": MakeUpValueWithUnits(entalpie_kg_air(temp,hr)),
-                "entalpie_m3_air": MakeUpValueWithUnits(entalpie_m3_air(temp,hr)),
-                "moisuredeficit_kg_air": MakeUpValueWithUnits(moisuredeficit_kg_air(temp,hr)),
-                "moisuredeficit_m3_air": MakeUpValueWithUnits(moisuredeficit_m3_air(temp,hr)),
-                "dew_point_temperature": MakeUpValueWithUnits(dew_point_temperature(temp,hr))
+                "density_air": MakeUpValueWithUnits(density_air(temp,rh)),
+                "absolutehumidity_kg_air": MakeUpValueWithUnits(absolutehumidity_kg_air(temp,rh)),
+                "absolutehumidity_m3_air": MakeUpValueWithUnits(absolutehumidity_m3_air(temp,rh)),
+                "entalpie_kg_air": MakeUpValueWithUnits(entalpie_kg_air(temp,rh)),
+                "entalpie_m3_air": MakeUpValueWithUnits(entalpie_m3_air(temp,rh)),
+                "moisuredeficit_kg_air": MakeUpValueWithUnits(moisuredeficit_kg_air(temp,rh)),
+                "moisuredeficit_m3_air": MakeUpValueWithUnits(moisuredeficit_m3_air(temp,rh)),
+                "dew_point_temperature": MakeUpValueWithUnits(dew_point_temperature(temp,rh))
             }
         }
         return jsonify(results), 200
