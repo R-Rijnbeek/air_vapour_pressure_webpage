@@ -13,7 +13,6 @@ from air_vapour_pressure_dynamics import (  vapourpressure,
                                             moisuredeficit_kg_air,
                                             moisuredeficit_m3_air,
                                             dew_point_temperature,
-                                            setArgumentCheck,
                                             setApplyUnits
                                         )
 
@@ -85,10 +84,19 @@ def delta_Method_change(temp, delta_temp, rh, delta_rh, METHOD=None):
 
     result = delta_Temp_contribution * delta_temp + delta_RH_contribution * delta_rh
 
-    return result
+    return float(result)
 
-def delta_AbsoluteHumidity(temp, delta_temp, rh, delta_rh):
+def delta_AbsoluteHumidity_kg_air(temp, delta_temp, rh, delta_rh):
     return delta_Method_change(temp, delta_temp, rh, delta_rh, METHOD=absolutehumidity_kg_air)
+
+def delta_AbsoluteHumidity_m3_air(temp, delta_temp, rh, delta_rh):
+    return delta_Method_change(temp, delta_temp, rh, delta_rh, METHOD=absolutehumidity_m3_air)
+
+def delta_entalpie_kg_air(temp, delta_temp, rh, delta_rh):
+    return delta_Method_change(temp, delta_temp, rh, delta_rh, METHOD=entalpie_kg_air)
+
+def delta_entalpie_m3_air(temp, delta_temp, rh, delta_rh):
+    return delta_Method_change(temp, delta_temp, rh, delta_rh, METHOD=entalpie_m3_air)
 
 
 @api.route("/post_variacional_request", methods=["POST"])
@@ -102,34 +110,19 @@ def variacional_process():
         rh = float(form.get("hr", type=float))
         delta_rh = float(form.get("delta_hr", type=float))
 
-        setArgumentCheck(False)
-        setApplyUnits(False)
+        setApplyUnits(False) # because of a reported bug
 
-        TEMP = sp.Symbol("temp")
-        RH = sp.Symbol("rh")
-
-
-        diff_ab_hu_by_Temp = sp.diff(absolutehumidity_kg_air(TEMP,RH),TEMP)
-        diff_ab_hu_by_RH = sp.diff(absolutehumidity_kg_air(TEMP,RH),RH)
-
-        delta_Temp_contribution = sp.N(diff_ab_hu_by_Temp.subs([(TEMP, temp), (RH, rh)]))
-        delta_RH_contribution = sp.N(diff_ab_hu_by_RH.subs([(TEMP, temp), (RH, rh)]))
-
-        result = delta_Temp_contribution * delta_temp + delta_RH_contribution * delta_rh
-
-        print(delta_Temp_contribution)
-        print(delta_RH_contribution)
-        print (result)
-
-
-
+        ab_hu_kg = absolutehumidity_kg_air(temp, rh)
+        entalpie_kg = entalpie_kg_air(temp, rh)
+        delta_ab_hu_kg  = delta_AbsoluteHumidity_kg_air(temp, delta_temp, rh, delta_rh)
+        delta_entalpie_kg = delta_entalpie_kg_air(temp, delta_temp, rh, delta_rh)
 
         results = {
             'processed':{
-                "temp": temp,
-                "delta_temp": delta_temp,
-                "hr": rh,
-                "delta_hr": delta_rh 
+                "ab_hu_kg": ab_hu_kg,
+                "delta_ab_hu_kg": entalpie_kg,
+                "entalpie_kg": delta_ab_hu_kg,
+                "delta_entalpie_kg": delta_entalpie_kg 
             }
         }
         return jsonify(results), 200
