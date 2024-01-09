@@ -107,8 +107,8 @@ def variacional_process():
 
         temp = float(form.get("temp",type=float))
         delta_temp = float(form.get("delta_temp",type=float))
-        rh = float(form.get("hr", type=float))
-        delta_rh = float(form.get("delta_hr", type=float))
+        rh = float(form.get("rh", type=float))
+        delta_rh = float(form.get("delta_rh", type=float))
 
         setApplyUnits(False) # because of a reported bug
 

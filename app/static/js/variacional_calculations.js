@@ -38,8 +38,8 @@ function AirPropertiesChangeCalculation(){
         data: {
             "temp": temp,
             "delta_temp": delta_temp,
-            "hr": hr,
-            "delta_hr": delta_hr
+            "rh": hr,
+            "delta_rh": delta_hr
         },
         success: function(response){
             console.log("INFO: Succesfull calculation" + JSON.stringify(response))
