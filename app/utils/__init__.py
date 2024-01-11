@@ -19,10 +19,11 @@ from air_vapour_pressure_dynamics import (  setApplyUnits,
 
 # =============== ROUNDING NUMBERS ===============
 
-@argument_check((float,int), decimals=int )
-def roundWithDecimals(floatNumber, decimals=2):
-    a = decimals*10
-    return round(floatNumber*a)/a
+
+
+@argument_check((float,int))
+def roundWithDecimals(floatNumber):
+    return f"{floatNumber:.2f}"
 
 @argument_check(UnitFloat)
 def MakeUpValueWithUnits(value):
@@ -30,10 +31,12 @@ def MakeUpValueWithUnits(value):
     unit = value.unit
     return f"{cleanValue}   {unit}"
 
+@argument_check((float,int),str)
+def ManualValueWithUnits(value, unit):
+    cleanValue = roundWithDecimals(value)
+    return f"{cleanValue}   {unit}"
 
 def process_basic_PostRequest(temp, rh):
-
-    setApplyUnits(True)
 
     results = {
         'processed':{
@@ -79,19 +82,23 @@ def delta_entalpie_m3_air(temp, delta_temp, rh, delta_rh):
 
 def process_variacional_PostRequest(temp, delta_temp, rh,delta_rh):
 
-    setApplyUnits(False)
+    ab_hu_kg = MakeUpValueWithUnits(absolutehumidity_kg_air(temp, rh))
+    entalpie_kg = MakeUpValueWithUnits(entalpie_kg_air(temp, rh))
 
-    ab_hu_kg = absolutehumidity_kg_air(temp, rh)
-    entalpie_kg = entalpie_kg_air(temp, rh)
-    delta_ab_hu_kg  = delta_AbsoluteHumidity_kg_air(temp, delta_temp, rh, delta_rh)
-    delta_entalpie_kg = delta_entalpie_kg_air(temp, delta_temp, rh, delta_rh)
+    setApplyUnits(False) #Because bug is not yet solved
+
+    delta_ab_hu_kg  = ManualValueWithUnits(delta_AbsoluteHumidity_kg_air(temp, delta_temp, rh, delta_rh),"Δ g/Kg h")
+    delta_entalpie_kg = ManualValueWithUnits(delta_entalpie_kg_air(temp, delta_temp, rh, delta_rh), "Δ KJ/Kg h")
 
     results = {
         'processed':{
-            "absolutehumidity_kg_air": roundWithDecimals(ab_hu_kg),
-            "delta_absolutehumidity_kg_air": roundWithDecimals(delta_ab_hu_kg, decimals=4),
-            "entalpie_kg_air": roundWithDecimals(entalpie_kg),
-            "delta_entalpie_kg_air": roundWithDecimals(delta_entalpie_kg, decimals=4)
+            "absolutehumidity_kg_air": ab_hu_kg,
+            "delta_absolutehumidity_kg_air": delta_ab_hu_kg,
+            "entalpie_kg_air": entalpie_kg,
+            "delta_entalpie_kg_air": delta_entalpie_kg
         }
     }
+
+    setApplyUnits(True) #Because bug is not yet solved
+
     return results
