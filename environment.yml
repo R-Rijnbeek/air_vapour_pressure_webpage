@@ -8,7 +8,6 @@ dependencies:
   - pip
   - pip:
     - sympy
-    - numpy
     - flask
     - gunicorn
-    - air-vapour-pressure-dynamics
+    - air-vapour-pressure-dynamics==1.8.10
