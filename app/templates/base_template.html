@@ -16,11 +16,14 @@
 
     <body>
         <div class="w3-bar" style="background-color: rgb(208, 226, 206);">
-            <a id="menu_1" href="{{ url_for('test.get_userlist') }}" style="width:50%" class="w3-bar-item w3-button w3-mobile tablink {{active_menu_1}}" onclick="openCity(event,'Basic Calculations')">
+            <a id="menu_1" href="{{ url_for('tab1.get_userlist') }}" style="width:33%" class="w3-bar-item w3-button w3-mobile tablink {{active_menu_1}}">
                 Basic Calculations
             </a>
-            <a id="menu_2" href="{{ url_for('test.variacional_calculus') }}" style="width:50%" class="w3-bar-item w3-button w3-mobile tablink {{active_menu_2}}" onclick="openCity(event,'variational Calculations')">
+            <a id="menu_2" href="{{ url_for('tab2.variacional_calculus') }}" style="width:33%" class="w3-bar-item w3-button w3-mobile tablink {{active_menu_2}}">
                 variational Calculations
+            </a>
+            <a id="menu_3" href="{{ url_for('tab3.graphic_view') }}" style="width:33%" class="w3-bar-item w3-button w3-mobile tablink {{active_menu_3}}">
+                Graphic View
             </a>
         </div>
 
