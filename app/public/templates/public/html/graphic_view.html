@@ -2,11 +2,17 @@
 
 {% block title %}Graphic View{% endblock %}
 
-{% block libraries %}    
+{% block libraries %}
+    <!-- Specific library for this module -->
+    <script src="/static/js/graphic_view.js" ></script> 
+    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
 {% endblock %}
 
 {% block content %}
 
-    hola
+<div id="chartdiv" style="height:50%;"></div>
+
+<button type="button" value="Load new data" onclick="loadNewData();">Load new data</button>
 
 {% endblock %}
