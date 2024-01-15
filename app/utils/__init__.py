@@ -105,9 +105,9 @@ def process_variacional_PostRequest(temp, delta_temp, rh,delta_rh):
 
 def row_calculation(temp, rh):
     return {
-        "RH":rh ,
-        "ab_hu": absolutehumidity_kg_air(temp, rh),
-        "entalpie_kg": entalpie_kg_air(temp,rh)
+        "RH":round(rh,2) ,
+        "ab_hu": round(absolutehumidity_kg_air(temp, rh),2),
+        "entalpie_kg": round(entalpie_kg_air(temp,rh),2)
         }
 
 def process_graphicUpdate_PostRequest(temp):
