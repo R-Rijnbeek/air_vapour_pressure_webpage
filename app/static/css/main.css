@@ -1,5 +1,6 @@
-body {
+html, body {
     background: rgb(236, 230, 230);
+    height: 100%;
 }
 
 .maincontent {

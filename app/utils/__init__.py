@@ -102,3 +102,23 @@ def process_variacional_PostRequest(temp, delta_temp, rh,delta_rh):
     setApplyUnits(True) #Because bug is not yet solved
 
     return results
+
+def row_calculation(temp, rh):
+    return {
+        "RH":rh ,
+        "ab_hu": absolutehumidity_kg_air(temp, rh),
+        "entalpie_kg": entalpie_kg_air(temp,rh)
+        }
+
+def process_graphicUpdate_PostRequest(temp):
+
+    rh_list = list(range(1,100))
+    calculation_list = []
+    for rh in rh_list:
+        calculation_list.append(row_calculation(temp, rh))
+
+    results = {'processed': calculation_list}
+    
+    return results
+
+
