@@ -41,24 +41,6 @@ function RefreshGraphicByTemperature(){
     });
 }
 
-
-function reloadData() {
-    var newdata = [{ 
-            "RH": 1, 
-            "ab_hu": 1200,
-            "entalpie_kg": 2345
-        }, { 
-            "RH": 20, 
-            "ab_hu": 2000,
-            "entalpie_kg": 2145
-        }, { 
-            "RH": 50, 
-            "ab_hu": 880,
-            "entalpie_kg": 2345
-        }];
-    return newdata;
-}
-
 function loadNewData(new_data) {
 
     for (let i = 0; i < series_list.length; i++) {
@@ -67,10 +49,11 @@ function loadNewData(new_data) {
 }
 
 
-function createAxisAndSeries(data, opposite, value_label, units) {
+function createAxisAndSeries(data, opposite, value_label, title, units) {
         
     var yRenderer = am5xy.AxisRendererY.new(root, {
-      opposite: opposite
+      opposite: opposite,
+      minGridDistance: 20
     });
 
     var yAxis = chart.yAxes.push(
@@ -80,6 +63,14 @@ function createAxisAndSeries(data, opposite, value_label, units) {
             min: 0
         })
     );
+
+    yAxis.children.unshift(am5.Label.new(root, {
+        text: `${title} (${units})`,
+        textAlign: 'center',
+        y: am5.p50,
+        x:(!opposite) ? am5.p0 : am5.p100,
+        rotation: -90,
+      }));
   
     if (chart.yAxes.indexOf(yAxis) > 0) {
         yAxis.set("syncWithAxis", chart.yAxes.getIndex(0));
@@ -88,7 +79,7 @@ function createAxisAndSeries(data, opposite, value_label, units) {
     // Add series
     series = chart.series.push(
         am5xy.LineSeries.new(root, {
-            name: "Series",
+            name: `${title} (${units})`,
             xAxis: xAxis,
             yAxis: yAxis,
             valueYField: value_label,
@@ -124,12 +115,7 @@ function loadAmChart() {
     root = am5.Root.new("chartdiv"); 
     chart = root.container.children.push( 
         am5xy.XYChart.new(root, {
-            focusable: true,
-            //panX: true,
-            //panY: true,
-            //wheelX: "panX",
-            //wheelY: "zoomX",
-            //pinchZoomX: true
+            focusable: true
         }) 
     );
 
@@ -139,19 +125,32 @@ function loadAmChart() {
     // Create X-Axis
     xAxis = chart.xAxes.push(
         am5xy.ValueAxis.new(root, {
-            renderer: am5xy.AxisRendererX.new(root, {}),
+            renderer: am5xy.AxisRendererX.new(root, {
+                minGridDistance: 20
+            }),
             min: 0,
             max: 100,
         })
     );
+
+    xAxis.children.push(am5.Label.new(root, {
+        text: 'Humidity (%)',
+        textAlign: 'center',
+        x: am5.p50
+      }));
+
     xAxis.data.setAll(data);
 
-    createAxisAndSeries(data, false, "ab_hu", "gr/kg");
-    createAxisAndSeries(data, true, "entalpie_kg", "KJ/Kg");
+    createAxisAndSeries(data, false, "ab_hu", "Absolute Humidity", "gr/kg");
+    createAxisAndSeries(data, true, "entalpie_kg", "Entalpie", "KJ/Kg");
 
     // Add legend
     var legend = chart.children.push(
-        am5.Legend.new(root, {}
+        am5.Legend.new(root, {
+            height: am5.percent(100),
+            width:200,
+            paddingLeft: 70
+        }
     )); 
     legend.data.setAll(chart.series.values);
 
