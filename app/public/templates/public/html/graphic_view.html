@@ -11,6 +11,18 @@
 
 {% block content %}
 
+<div class="maincontent">
+    <div class="slidecontainer">
+        <p class="slider_title">
+            Temperature [°C] 
+        </p>
+        <form>
+            <input name="foo" type="range" min="-10" max="100" value="20" step="0.1" class="slider" id="temperature">
+            <output for="foo" onforminput="value = foo.valueAsNumber;"></output>
+        </form>
+    </div>
+</div>
+
 <div id="chartdiv" style="height:50%;"></div>
 
 <button type="button" value="Load new data" onclick="loadNewData();">Load new data</button>

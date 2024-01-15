@@ -1,6 +1,7 @@
 var globalVars = {unloaded:true};
-var series1;
-//var xAxis;
+var series_list = [];
+var chart
+var root
 
 $(window).bind('beforeunload', function(){
     console.log("before unload");
@@ -10,20 +11,25 @@ $(window).bind('beforeunload', function(){
 function reloadData() {
     var newdata = [{ 
             "RH": 1, 
-            "ab_hu": 1200
+            "ab_hu": 1200,
+            "entalpie_kg": 2345
         }, { 
-            "RH": 2, 
-            "ab_hu": 2000
+            "RH": 20, 
+            "ab_hu": 2000,
+            "entalpie_kg": 2145
         }, { 
-            "RH": 3, 
-            "ab_hu": 880
+            "RH": 50, 
+            "ab_hu": 880,
+            "entalpie_kg": 2345
         }];
     return newdata;
 }
 
 function loadNewData() {
-    series1.data.setAll(reloadData());
-    //xAxis.data.setAll(reloadData());
+
+    for (let i = 0; i < series_list.length; i++) {
+        series_list[i].data.setAll(reloadData());
+    }
 }
 
 
@@ -31,60 +37,104 @@ window.addEventListener('load', function() {
 
     var data = [{ 
         "RH": 1, 
-        "ab_hu": 1000
+        "ab_hu": 1000,
+        "entalpie_kg": 2345
         }, { 
-        "RH": 2, 
-        "ab_hu": 2200
+        "RH": 20, 
+        "ab_hu": 2200,
+        "entalpie_kg": 2345
         }, { 
-        "RH": 3, 
-        "ab_hu": 850
+        "RH": 50, 
+        "ab_hu": 850,
+        "entalpie_kg": 2345
     }];
 
     loadAmChart(data)
 })
 
+function createAxisAndSeries(data, opposite, value_label, units) {
+        
+    var yRenderer = am5xy.AxisRendererY.new(root, {
+      opposite: opposite
+    });
+
+    var yAxis = chart.yAxes.push(
+        am5xy.ValueAxis.new(root, {
+            maxDeviation: 1,
+            renderer: yRenderer,
+            min: 0,
+            max: 3000,
+        })
+    );
+  
+    if (chart.yAxes.indexOf(yAxis) > 0) {
+        yAxis.set("syncWithAxis", chart.yAxes.getIndex(0));
+    }
+  
+    // Add series
+    series = chart.series.push(
+        am5xy.LineSeries.new(root, {
+            name: "Series",
+            xAxis: xAxis,
+            yAxis: yAxis,
+            valueYField: value_label,
+            valueXField: "RH",
+            tooltip: am5.Tooltip.new(root, {
+                pointerOrientation: "horizontal",
+                labelText: `{valueY}  ${units}`  
+            })
+        })
+    );
+
+    series.fills.template.setAll({ fillOpacity: 0.2, visible: true });
+    series.strokes.template.setAll({ strokeWidth: 1 });
+
+    yRenderer.grid.template.set("strokeOpacity", 0.05);
+    yRenderer.labels.template.set("fill", series.get("fill"));
+    yRenderer.setAll({
+        stroke: series.get("fill"),
+        strokeOpacity: 1,
+        opacity: 1
+    });
+
+series.data.setAll(data);
+
+series_list.push(series);
+
+}
+
 function loadAmChart(data) {
 
     // Create root and chart
-    var root = am5.Root.new("chartdiv"); 
-    var chart = root.container.children.push( 
+    root = am5.Root.new("chartdiv"); 
+    chart = root.container.children.push( 
         am5xy.XYChart.new(root, {
-            panY: false,
-            layout: root.verticalLayout
+            focusable: true,
+            panX: true,
+            panY: true,
+            wheelX: "panX",
+            wheelY: "zoomX",
+            pinchZoomX: true
         }) 
     );
 
-    // Craete Y-axis
-    var yAxis = chart.yAxes.push( 
-        am5xy.ValueAxis.new(root, { 
-            min: 0,
-            max: 3000,
-            renderer: am5xy.AxisRendererY.new(root, {}) 
-        }) 
-    );
+    var easing = am5.ease.linear;
+    chart.get("colors").set("step", 3);
+
+    
 
     // Create X-Axis
     xAxis = chart.xAxes.push(
-        am5xy.CategoryAxis.new(root, {
+        am5xy.ValueAxis.new(root, {
             renderer: am5xy.AxisRendererX.new(root, {}),
             min: 0,
             max: 100,
-            categoryField: "RH"
         })
     );
     xAxis.data.setAll(data);
 
-    // Create series
-    series1 = chart.series.push( 
-        am5xy.LineSeries.new(root, { 
-            name: "Series", 
-            xAxis: xAxis, 
-            yAxis: yAxis, 
-            valueYField: "ab_hu", 
-            categoryXField: "RH" 
-        }) 
-    );
-    series1.data.setAll(data);
+    createAxisAndSeries(data, false, "ab_hu", "gr/kg");
+    createAxisAndSeries(data, true, "entalpie_kg", "KJ/Kg");
 
     // Add legend
     var legend = chart.children.push(
