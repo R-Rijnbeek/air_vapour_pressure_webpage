@@ -6,7 +6,8 @@ from basic_decorators import argument_check
 
 from app.utils import ( 
                         process_basic_PostRequest, 
-                        process_variacional_PostRequest
+                        process_variacional_PostRequest,
+                        process_graphicUpdate_PostRequest
                     )
 
 from app.shared import LOG
@@ -70,7 +71,22 @@ def variacional_process():
         rh = float(form.get("rh", type=float))
         delta_rh = float(form.get("delta_rh", type=float))
 
-        results = process_variacional_PostRequest(temp, delta_temp, rh,delta_rh)
+        results = process_variacional_PostRequest(temp, delta_temp, rh, delta_rh)
+
+        return jsonify(results), 200
+    except Exception as exc:
+        LOG.error(f"ERROR: {exc}")
+        abort(400)
+
+@tab3.route("/post_graphic_request", methods=["POST"])
+@argument_check()
+def variacional_process():
+    try:
+        form = request.form
+
+        temp = float(form.get("temp",type=float))
+        
+        results = process_graphicUpdate_PostRequest(temp)
 
         return jsonify(results), 200
     except Exception as exc:

@@ -8,6 +8,40 @@ $(window).bind('beforeunload', function(){
     globalVars.unloaded = true;
 });
 
+
+window.addEventListener('load', function() {
+
+    var temperature_slider = document.getElementById("temperature");
+
+    sliderChanger(0.96)
+
+    AddEventListenerOnSlider(temperature_slider, RefreshGraphicByTemperature)
+
+    RefreshGraphicByTemperature()
+
+    loadAmChart()
+})
+
+function RefreshGraphicByTemperature(){
+    let temp = $('#temperature').val()
+    $.ajax(
+        {
+        url:"/post_graphic_request",
+        type:"POST",
+        data: {
+            "temp": temp,
+        },
+        success: function(response){
+            console.log("INFO: Succesfull calculation" + JSON.stringify(response))
+            loadNewData(response.processed)
+        },
+        error: function(error){
+            console.log("ERROR: Unespected error => " + error.status)
+        },
+    });
+}
+
+
 function reloadData() {
     var newdata = [{ 
             "RH": 1, 
@@ -25,32 +59,13 @@ function reloadData() {
     return newdata;
 }
 
-function loadNewData() {
+function loadNewData(new_data) {
 
     for (let i = 0; i < series_list.length; i++) {
-        series_list[i].data.setAll(reloadData());
+        series_list[i].data.setAll(new_data);
     }
 }
 
-
-window.addEventListener('load', function() {
-
-    var data = [{ 
-        "RH": 1, 
-        "ab_hu": 1000,
-        "entalpie_kg": 2345
-        }, { 
-        "RH": 20, 
-        "ab_hu": 2200,
-        "entalpie_kg": 2345
-        }, { 
-        "RH": 50, 
-        "ab_hu": 850,
-        "entalpie_kg": 2345
-    }];
-
-    loadAmChart(data)
-})
 
 function createAxisAndSeries(data, opposite, value_label, units) {
         
@@ -62,8 +77,7 @@ function createAxisAndSeries(data, opposite, value_label, units) {
         am5xy.ValueAxis.new(root, {
             maxDeviation: 1,
             renderer: yRenderer,
-            min: 0,
-            max: 3000,
+            min: 0
         })
     );
   
@@ -103,25 +117,24 @@ series_list.push(series);
 
 }
 
-function loadAmChart(data) {
+function loadAmChart() {
 
+    var data = []
     // Create root and chart
     root = am5.Root.new("chartdiv"); 
     chart = root.container.children.push( 
         am5xy.XYChart.new(root, {
             focusable: true,
-            panX: true,
-            panY: true,
-            wheelX: "panX",
-            wheelY: "zoomX",
-            pinchZoomX: true
+            //panX: true,
+            //panY: true,
+            //wheelX: "panX",
+            //wheelY: "zoomX",
+            //pinchZoomX: true
         }) 
     );
 
     var easing = am5.ease.linear;
     chart.get("colors").set("step", 3);
-
-    
 
     // Create X-Axis
     xAxis = chart.xAxes.push(
