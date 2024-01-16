@@ -2,32 +2,35 @@
 
 window.addEventListener('load', function() {
 
-    createDataTable() 
+    createDataTableRequest() 
 
 })
 
-function createDataTable() {
+function createDataTableRequest() {
 
-    JSON = {
-        "columns": [
-            { "data" : "DT_RowId", "title" : "Id" },
-            { "data" : "supplier", "title" : "supplier" },
-            { "data" : "color", "title" : "color" }
-        ],
-        "data": [
-            { "DT_RowId" : "row_3", "supplier" : "small", "color" : "red" },
-            { "DT_RowId" : "row_3", "supplier" : "medium", "color" : "blue" },
-            { "DT_RowId" : "row_3", "supplier" : "medium", "color" : "blue" },
-            { "DT_RowId" : "row_11", "supplier" : "large", "color" : "blue" }
-        ]
-    }
+    $.ajax(
+        {
+        url:"/post_datatable_request",
+        type:"POST",
+        data: {},
+        success: function(response){
+            console.log("INFO: Succesfull calculation" + JSON.stringify(response))
+            CreateDataTableByResponse(response)
+        },
+        error: function(error){
+            console.log("ERROR: Unespected error => " + error.status)
+        },
+    });
+}
 
+    
+
+
+function CreateDataTableByResponse(response) {
     const table = new DataTable('#DataTable', {
-        data: JSON.data,
-        columns: JSON.columns 
-
-
+        data: response.data,
+        columns: response.columns 
     })
 
-
 }
+    
