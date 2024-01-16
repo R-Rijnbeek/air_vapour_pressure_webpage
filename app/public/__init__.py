@@ -10,4 +10,6 @@ tab2 = Blueprint('tab2', __name__, template_folder = 'templates')
 
 tab3 = Blueprint('tab3', __name__, template_folder = 'templates')
 
+tab4 = Blueprint('tab4', __name__, template_folder = 'templates')
+
 from . import routes

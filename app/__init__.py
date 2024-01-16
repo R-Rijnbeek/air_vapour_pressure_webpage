@@ -29,10 +29,11 @@ def create_app():
         LOG.init_app(APP)
 
         LOG.info("Register Blueprints")
-        from .public import tab1, tab2, tab3
+        from .public import tab1, tab2, tab3, tab4
         APP.register_blueprint(tab1)
         APP.register_blueprint(tab2)
         APP.register_blueprint(tab3)
+        APP.register_blueprint(tab4)
 
         LOG.info("Run the WebService")
         return APP
