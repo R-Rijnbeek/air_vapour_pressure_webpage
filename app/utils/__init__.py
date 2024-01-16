@@ -122,3 +122,20 @@ def process_graphicUpdate_PostRequest(temp):
     return results
 
 
+def process_datatable_PostRequest():
+
+    collumns = [{ "data" : "t", "title" : "Temperature (ºC)" },
+                { "data" : "rh", "title" : "Relative Humidity (%)" },
+                { "data" : "ab_h_kg", "title" : "Absolutehumidity (g/Kg)" },
+                { "data" : "entalpie_kg", "title" : "Entalpie (KJ/Kg)" }]
+
+    results = {
+            "columns": collumns,
+            "data": [
+                { "t" : "row_3", "rh" : "small", "ab_h_kg" : "red", "entalpie_kg":"hola"},
+            ]
+        }
+    
+    return results
+
+

@@ -7,7 +7,8 @@ from basic_decorators import argument_check
 from app.utils import ( 
                         process_basic_PostRequest, 
                         process_variacional_PostRequest,
-                        process_graphicUpdate_PostRequest
+                        process_graphicUpdate_PostRequest,
+                        process_datatable_PostRequest
                     )
 
 from app.shared import LOG
@@ -107,22 +108,7 @@ def variacional_process():
 @argument_check()
 def datatable_process():
     try:
-        #form = request.form
-
-        results = {
-            "columns": [
-                { "data" : "DT_RowId", "title" : "Id" },
-                { "data" : "supplier", "title" : "supplier" },
-                { "data" : "color", "title" : "color" }
-            ],
-            "data": [
-                { "DT_RowId" : "row_3", "supplier" : "small", "color" : "red" },
-                { "DT_RowId" : "row_3", "supplier" : "medium", "color" : "blue" },
-                { "DT_RowId" : "row_3", "supplier" : "medium", "color" : "blue" },
-                { "DT_RowId" : "row_11", "supplier" : "large", "color" : "blue" }
-            ]
-        }
-
+        results = process_datatable_PostRequest()
         return jsonify(results), 200
     except Exception as exc:
         LOG.error(f"ERROR: {exc}")
