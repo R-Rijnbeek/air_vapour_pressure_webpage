@@ -1,0 +1,22 @@
+{% extends "html/base_template.html" %}
+
+{% block title %}Data Table{% endblock %}
+
+{% block libraries %}
+    <!-- Specific library for this module -->
+    <script src="/static/js/data_table.js" ></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <link href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" rel="stylesheet" type= "text/css">
+{% endblock %}
+
+{% block content %}
+
+    <div class="maincontent">
+
+        <table id="DataTable" class="display" style="width:100%">
+
+        </table>
+
+    </div>
+
+{% endblock %}

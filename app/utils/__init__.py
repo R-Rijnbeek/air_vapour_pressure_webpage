@@ -2,6 +2,8 @@
 
 import sympy as sp
 
+import numpy as np
+
 from basic_decorators import argument_check
 
 from air_vapour_pressure_dynamics import (  setApplyUnits,
@@ -118,6 +120,32 @@ def process_graphicUpdate_PostRequest(temp):
         calculation_list.append(row_calculation(temp, rh))
 
     results = {'processed': calculation_list}
+    
+    return results
+
+
+def process_datatable_PostRequest():
+
+    elems = np.arange(0, 100, 1)
+    temp = np.repeat(elems, 100)
+    rh = np.tile(elems,100)
+
+    density = np.round(density_air(temp,rh),3)
+    ab_h_kg = np.round(absolutehumidity_kg_air(temp,rh),3)
+    entalpie_kg = np.round(entalpie_kg_air(temp,rh),3)
+
+    data = [{"t":temp_el, "rh":rh_el,"density": density_el, "ab_h_kg":ab_h_kg_el, "entalpie_kg":entalpie_kg_el} for temp_el, rh_el, density_el,  ab_h_kg_el, entalpie_kg_el in zip(temp.tolist(), rh.tolist(), density.tolist(), ab_h_kg.tolist(), entalpie_kg.tolist() )]
+
+    collumns = [{ "data" : "t", "title" : "Temperature (ºC)" },
+                { "data" : "rh", "title" : "Relative Humidity (%)" },
+                { "data" : "density", "title" : "density (gr/m^3)" },
+                { "data" : "ab_h_kg", "title" : "Absolutehumidity (g/Kg)" },
+                { "data" : "entalpie_kg", "title" : "Entalpie (KJ/Kg)" }]
+
+    results = {
+            "columns": collumns,
+            "data": data
+        }
     
     return results
 
