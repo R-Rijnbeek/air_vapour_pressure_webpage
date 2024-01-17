@@ -12,3 +12,4 @@ dependencies:
     - flask
     - gunicorn
     - air-vapour-pressure-dynamics==1.8.10
+    - jinja2==3.0
