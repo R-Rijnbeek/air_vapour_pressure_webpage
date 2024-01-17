@@ -19,6 +19,11 @@ html, body {
     width:49%
 }
 
+.slider_sub_container p {
+    font-size: 11px;
+    text-align: center;
+}
+
 .slider {
     -webkit-appearance: none;
     width: 100%;
@@ -45,11 +50,6 @@ html, body {
 
 .slider_title {
     font-size: 20px;
-    text-align: center;
-}
-
-.slider_title_2 {
-    font-size: 11px;
     text-align: center;
 }
 
