@@ -1,0 +1,7 @@
+<p class="slider_title">
+    {{title}} 
+</p>
+<form>
+    <input name="foo" type="range" min="{{min}}" max="{{max}}" value="{{init_value}}" step="{{step}}" class="slider" id="{{id}}">
+    <output for="foo" onforminput="value = foo.valueAsNumber;"></output>
+</form>

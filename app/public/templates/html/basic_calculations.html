@@ -11,20 +11,12 @@
 
     <div class="maincontent">
         <div class="slidecontainer">
-            <p class="slider_title">
-                Temperature [°C] 
-            </p>
-            <form>
-                <input name="foo" type="range" min="-10" max="100" value="20" step="0.1" class="slider" id="temperature">
-                <output for="foo" onforminput="value = foo.valueAsNumber;"></output>
-            </form>
-            <p class="slider_title">
-                Relative Humidity [%]
-            </p>
-            <form>
-                <input type="range" min="0" max="100" value="65" step="0.1" class="slider" id="relative_humidity">
-                <output for="foo" onforminput="value = foo.valueAsNumber;"></output>
-            </form>
+            {% with title="Temperature [°C]", id="temperature", init_value=20, min=-10, max=100, step=0.1 %}
+                {% include "html/slider.html" %}
+            {% endwith %}
+            {% with title="Relative Humidity [%]", id="relative_humidity", init_value=65, min=-0, max=100, step=0.1 %}
+                {% include "html/slider.html" %}
+            {% endwith %}
         </div>
 
         <div id="tableDiv" class="tableDiv"></div>
